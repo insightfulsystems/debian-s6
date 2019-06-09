@@ -1,7 +1,7 @@
 ARG BASE 
-ARG ARCH
 FROM ${BASE}
-COPY qemu-arm-static /usr/bin/qemu-arm-static
+ARG ARCH
+COPY qemu-${ARCH}-static /usr/bin/qemu-${ARCH}-static
 
 ARG VCS_REF
 ARG VCS_URL
