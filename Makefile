@@ -53,7 +53,7 @@ build:
 translate-%: # translate our architecture mappings to s6's
 	@if [[ "$*" == "arm32v7" ]] ; then \
 	   echo "armhf"; \
-	elif [[ "$*" == "arm32v8" ]] ; then \
+	elif [[ "$*" == "arm64v8" ]] ; then \
 	   echo "aarch64"; \
 	else \
 		echo $*; \
@@ -64,7 +64,6 @@ build-%:
 	docker build --build-arg BUILD_DATE=$(BUILD_DATE) \
 		--build-arg ARCH=$(shell make translate-$(ARCH);) \
 		--build-arg BASE=$(BUILD_IMAGE_NAME):$(ARCH) \
-		--build-arg VERSION=$(S6_OVERLAY_VERSION) \
 		--build-arg VCS_REF=$(VCS_REF) \
 		--build-arg VCS_URL=$(VCS_URL) \
 		-t $(IMAGE_NAME):$(ARCH) src
