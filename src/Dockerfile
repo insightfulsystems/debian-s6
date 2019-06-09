@@ -13,9 +13,10 @@ RUN apt-get update \
 	curl \
 	gnupg \
 	tzdata \
+	jq \
  && apt-get install -y curl tzdata \
  && locale-gen en_US.UTF-8 \
- && VERSION=$(curl -SL https://api.github.com/repos/just-containers/s6-overlay/releases/latest | awk -v FS='[""]' '/tag_name/{print $4;exit}' | sed -e 's_v__') \
+ && VERSION=$(curl -jkSL https://api.github.com/repos/just-containers/s6-overlay/releases/latest | jq .tag_name | sed -e 's_[v\"]__g') \ 
  && echo "using s6 version: $VERSION-$ARCH" \
  && curl -o /tmp/s6-overlay-${ARCH}.tar.gz -jkSL https://github.com/just-containers/s6-overlay/releases/download/v${VERSION}/s6-overlay-${ARCH}.tar.gz \
  && curl -o /tmp/s6-overlay-${ARCH}.tar.gz.sig -jkSL https://github.com/just-containers/s6-overlay/releases/download/v${VERSION}/s6-overlay-${ARCH}.tar.gz.sig \
@@ -29,6 +30,7 @@ RUN apt-get update \
     apt-utils \
     curl \
 	gnupg \
+	jq \
  && apt-get autoremove -y \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/* 
