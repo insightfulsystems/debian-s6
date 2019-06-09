@@ -26,14 +26,14 @@ jobs:
         - make build-amd64
         - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         - make push-amd64
-    - stage: arm32v6
-      name: ARMv6 32-bit (Older Raspberry Pis, Pi Zero, usually soft float)
+    - stage: arm64v8
+      name: ARMv8 64-bit (modern Raspberry 3+, other 64-bit ARM)
       script:
         - make qemu
-        - make wrap-arm32v6
-        - make build-arm32v6
+        - make wrap-arm64v8
+        - make build-arm64v8
         - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        - make push-arm32v6
+        - make push-arm64v8
     - stage: arm32v7
       name: ARMv7 32-bit (modern Raspberry Pi 2/3+, ODROID, other 32-bit ARM, usually hard float)
       script:

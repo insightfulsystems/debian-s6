@@ -53,8 +53,8 @@ build:
 translate-%: # translate our architecture mappings to s6's
 	@if [[ "$*" == "arm32v7" ]] ; then \
 	   echo "armhf"; \
-	elif [[ "$*" == "arm32v6" ]] ; then \
-	   echo "arm"; \
+	elif [[ "$*" == "arm32v8" ]] ; then \
+	   echo "aarch64"; \
 	else \
 		echo $*; \
 	fi 
