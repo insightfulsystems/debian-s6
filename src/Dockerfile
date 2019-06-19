@@ -7,14 +7,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
  && apt-get dist-upgrade -y \
  && apt-get install -y --no-install-recommends \
-    apt-utils \
+    	apt-utils \
 	ca-certificates \
 	locales \
 	curl \
 	gnupg \
 	tzdata \
 	jq \
- && apt-get install -y curl tzdata \
  && locale-gen en_US.UTF-8 \
  && VERSION=$(curl -jkSL https://api.github.com/repos/just-containers/s6-overlay/releases/latest | jq .tag_name | sed -e 's_[v\"]__g') \ 
  && echo "using s6 version: $VERSION-$ARCH" \
@@ -27,8 +26,8 @@ RUN apt-get update \
  && usermod -G users abc \
  && mkdir -p /app /config /data /defaults \
  && apt-get purge -y \
-    apt-utils \
-    curl \
+    	apt-utils \
+    	curl \
 	gnupg \
 	jq \
  && apt-get autoremove -y \
