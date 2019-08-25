@@ -1,11 +1,11 @@
-export IMAGE_NAME?=insightful/ubuntu-s6
+export IMAGE_NAME?=insightful/debian-s6
 export VCS_REF=`git rev-parse --short HEAD`
-export VCS_URL=https://github.com/insightfulsystems/ubuntu-s6
+export VCS_URL=https://github.com/insightfulsystems/debian-s6
 export BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
 export TAG_DATE=`date -u +"%Y%m%d"`
-export UBUNTU_VERSION=ubuntu:18.04
-export QEMU_VERSION=4.0.0-2
-export BUILD_IMAGE_NAME=local/ubuntu-base
+export DEBIAN_VERSION=debian:10
+export QEMU_VERSION=4.0.0-0
+export BUILD_IMAGE_NAME=local/debian-base
 export TARGET_ARCHITECTURES=amd64 arm64v8 arm32v7
 export QEMU_ARCHITECTURES=arm aarch64
 export SHELL=/bin/bash
@@ -32,8 +32,8 @@ wrap:
 	$(foreach ARCH, $(TARGET_ARCHITECTURES), make wrap-$(ARCH);)
 
 wrap-amd64:
-	docker pull amd64/$(UBUNTU_VERSION)
-	docker tag amd64/$(UBUNTU_VERSION) $(BUILD_IMAGE_NAME):amd64
+	docker pull amd64/$(DEBIAN_VERSION)
+	docker tag amd64/$(DEBIAN_VERSION) $(BUILD_IMAGE_NAME):amd64
 
 wrap-translate-%: 
 	@if [[ "$*" == "arm64v8" ]] ; then \
@@ -46,7 +46,7 @@ wrap-%:
 	$(eval ARCH := $*)
 	docker build --build-arg BUILD_DATE=$(BUILD_DATE) \
 		--build-arg ARCH=$(shell make wrap-translate-$(ARCH)) \
-		--build-arg BASE=$(ARCH)/$(UBUNTU_VERSION) \
+		--build-arg BASE=$(ARCH)/$(DEBIAN_VERSION) \
 		--build-arg VCS_REF=$(VCS_REF) \
 		--build-arg VCS_URL=$(VCS_URL) \
 		-t $(BUILD_IMAGE_NAME):$(ARCH) qemu
